@@ -58,6 +58,8 @@ public class Start {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+
+		
 		
 		
 		// Page Initialization
@@ -72,12 +74,6 @@ public class Start {
 		InputPage.setBounds(0, 0, 824, 591);
 		InputPage.setVisible(false);
 		InputPage.setLayout(null);
-		
-		JPanel ResultPage = new JPanel();
-		frame.getContentPane().add(ResultPage);
-		ResultPage.setBounds(0, 0, 824, 591);
-		ResultPage.setVisible(false);
-		ResultPage.setLayout(null);
 
 		
 		
@@ -541,6 +537,38 @@ public class Start {
 			}
 		});
 		
+		// Start Page Button
+				JButton startButton = new JButton("시작");
+				startButton.setFont(new Font("D2Coding", Font.PLAIN, 20));
+				startButton.setBounds(358, 456, 100, 58);
+				StartPage.add(startButton);
+				
+				startButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						target = txtTarget.getText();
+						program = txtProgram.getText();
+
+						if (target.isEmpty() || program.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "값을 입력해주세요.");
+						}
+						else {
+							targetPrint.setText(target);
+							programPrint.setText(program);
+							StartPage.setVisible(false);
+							InputPage.setVisible(true);
+						}
+					}
+				});
+				
+
+		
+		JPanel ResultPage = new JPanel();
+		frame.getContentPane().add(ResultPage);
+		ResultPage.setBounds(0, 0, 824, 591);
+		ResultPage.setVisible(false);
+		ResultPage.setLayout(null);
+		
 		
 		
 		JLabel resultLabel = new JLabel("설문조사 결과");
@@ -946,133 +974,130 @@ public class Start {
 		resultCountPrint.setBounds(647, 90, 61, 31);
 		ResultPage.add(resultCountPrint);
 		
-		restartButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				answerChart = new int[7][5];
-				count = 0;
-				Count.setText(String.valueOf(count+1));
-				
-				groupQ1.clearSelection();
-				groupQ2.clearSelection();
-				groupQ3.clearSelection();
-				groupQ4.clearSelection();
-				groupQ5.clearSelection();
-				groupQ6.clearSelection();
-				groupQ7.clearSelection();
-				
-				ResultPage.setVisible(false);
-				InputPage.setVisible(false);
-				StartPage.setVisible(true);
-			}
-		});
+		JLabel resultPercentageAverage = new JLabel("000");
+		resultPercentageAverage.setHorizontalAlignment(SwingConstants.CENTER);
+		resultPercentageAverage.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		resultPercentageAverage.setBounds(679, 526, 53, 31);
+		ResultPage.add(resultPercentageAverage);
 		
-		// Start Page Button
-				JButton startButton = new JButton("시작");
-				startButton.setFont(new Font("D2Coding", Font.PLAIN, 20));
-				startButton.setBounds(358, 456, 100, 58);
-				StartPage.add(startButton);
-				
-				startButton.addActionListener(new ActionListener() {
+		JLabel resultAverageLabel = new JLabel("평균 : ");
+		resultAverageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		resultAverageLabel.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		resultAverageLabel.setBounds(607, 526, 88, 31);
+		ResultPage.add(resultAverageLabel);
+		
+				restartButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						target = txtTarget.getText();
-						program = txtProgram.getText();
-
-						if (target.isEmpty() || program.isEmpty()) {
-							JOptionPane.showMessageDialog(null, "값을 입력해주세요.");
+						answerChart = new int[7][5];
+						count = 0;
+						Count.setText(String.valueOf(count+1));
+						
+						groupQ1.clearSelection();
+						groupQ2.clearSelection();
+						groupQ3.clearSelection();
+						groupQ4.clearSelection();
+						groupQ5.clearSelection();
+						groupQ6.clearSelection();
+						groupQ7.clearSelection();
+						
+						ResultPage.setVisible(false);
+						InputPage.setVisible(false);
+						StartPage.setVisible(true);
+					}
+				});
+				
+				JButton ExitButton = new JButton("완료");
+				ExitButton.setBackground(new Color(0, 191, 255));
+				ExitButton.setFont(new Font("D2Coding", Font.PLAIN, 20));
+				ExitButton.setBounds(695, 31, 74, 49);
+				ExitButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (count <= 0) {
+							JOptionPane.showMessageDialog(null, "한 명 이상의 결과를 입력해주세요.");
+						}
+						else if (groupQ1.getSelection()==null &&
+								 groupQ2.getSelection()==null &&
+								 groupQ3.getSelection()==null &&
+								 groupQ4.getSelection()==null &&
+								 groupQ5.getSelection()==null &&
+								 groupQ6.getSelection()==null &&
+								 groupQ7.getSelection()==null) {
+							StartPage.setVisible(false);
+							InputPage.setVisible(false);
+							ResultPage.setVisible(true);
+							
+							resultTargetPrint.setText(target);
+							resultProgramPrint.setText(program);
+							resultCountPrint.setText(Integer.toString(count));
+							
+							resultQ1P5.setText(Integer.toString(answerChart[0][0]));
+							resultQ1P4.setText(Integer.toString(answerChart[0][1]));
+							resultQ1P3.setText(Integer.toString(answerChart[0][2]));
+							resultQ1P2.setText(Integer.toString(answerChart[0][3]));
+							resultQ1P1.setText(Integer.toString(answerChart[0][4]));
+							resultQ2P5.setText(Integer.toString(answerChart[1][0]));
+							resultQ2P4.setText(Integer.toString(answerChart[1][1]));
+							resultQ2P3.setText(Integer.toString(answerChart[1][2]));
+							resultQ2P2.setText(Integer.toString(answerChart[1][3]));
+							resultQ2P1.setText(Integer.toString(answerChart[1][4]));
+							resultQ3P5.setText(Integer.toString(answerChart[2][0]));
+							resultQ3P4.setText(Integer.toString(answerChart[2][1]));
+							resultQ3P3.setText(Integer.toString(answerChart[2][2]));
+							resultQ3P2.setText(Integer.toString(answerChart[2][3]));
+							resultQ3P1.setText(Integer.toString(answerChart[2][4]));
+							resultQ4P5.setText(Integer.toString(answerChart[3][0]));
+							resultQ4P4.setText(Integer.toString(answerChart[3][1]));
+							resultQ4P3.setText(Integer.toString(answerChart[3][2]));
+							resultQ4P2.setText(Integer.toString(answerChart[3][3]));
+							resultQ4P1.setText(Integer.toString(answerChart[3][4]));
+							resultQ5P5.setText(Integer.toString(answerChart[4][0]));
+							resultQ5P4.setText(Integer.toString(answerChart[4][1]));
+							resultQ5P3.setText(Integer.toString(answerChart[4][2]));
+							resultQ5P2.setText(Integer.toString(answerChart[4][3]));
+							resultQ5P1.setText(Integer.toString(answerChart[4][4]));
+							resultQ6P5.setText(Integer.toString(answerChart[5][0]));
+							resultQ6P4.setText(Integer.toString(answerChart[5][1]));
+							resultQ6P3.setText(Integer.toString(answerChart[5][2]));
+							resultQ6P2.setText(Integer.toString(answerChart[5][3]));
+							resultQ6P1.setText(Integer.toString(answerChart[5][4]));
+							resultQ7P5.setText(Integer.toString(answerChart[6][0]));
+							resultQ7P4.setText(Integer.toString(answerChart[6][1]));
+							resultQ7P3.setText(Integer.toString(answerChart[6][2]));
+							resultQ7P2.setText(Integer.toString(answerChart[6][3]));
+							resultQ7P1.setText(Integer.toString(answerChart[6][4]));
+							
+							Double Q1Float = ((answerChart[0][0]+answerChart[0][1])*1.0/count)*100;
+							Double Q2Float = ((answerChart[1][0]+answerChart[1][1])*1.0/count)*100;
+							Double Q3Float = ((answerChart[2][0]+answerChart[2][1])*1.0/count)*100;
+							Double Q4Float = ((answerChart[3][0]+answerChart[3][1])*1.0/count)*100;
+							Double Q5Float = ((answerChart[4][0]+answerChart[4][1])*1.0/count)*100;
+							Double Q6Float = ((answerChart[5][0]+answerChart[5][1])*1.0/count)*100;
+							Double Q7Float = ((answerChart[6][0]+answerChart[6][1])*1.0/count)*100;
+							
+							String Q1 = String.format("%.1f", Q1Float);
+							String Q2 = String.format("%.1f", Q2Float);
+							String Q3 = String.format("%.1f", Q3Float);
+							String Q4 = String.format("%.1f", Q4Float);
+							String Q5 = String.format("%.1f", Q5Float);
+							String Q6 = String.format("%.1f", Q6Float);
+							String Q7 = String.format("%.1f", Q7Float);
+							
+							
+							resultQ1Percentage.setText(Q1);
+							resultQ2Percentage.setText(Q2); 
+							resultQ3Percentage.setText(Q3); 
+							resultQ4Percentage.setText(Q4);
+							resultQ5Percentage.setText(Q5);
+							resultQ6Percentage.setText(Q6);
+							resultQ7Percentage.setText(Q7);
+							resultPercentageAverage.setText(String.format("%.1f", (Q1Float+Q2Float+Q3Float+Q4Float+Q5Float+Q6Float+Q7Float)/7));
 						}
 						else {
-							targetPrint.setText(target);
-							programPrint.setText(program);
-							StartPage.setVisible(false);
-							InputPage.setVisible(true);
+							JOptionPane.showMessageDialog(null, "입력되지 않은 항목이 있습니다.");
 						}
 					}
 				});
-		
-		JButton ExitButton = new JButton("완료");
-		ExitButton.setBackground(new Color(0, 191, 255));
-		ExitButton.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		ExitButton.setBounds(695, 31, 74, 49);
-		ExitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (count <= 0) {
-					JOptionPane.showMessageDialog(null, "한 명 이상의 결과를 입력해주세요.");
-				}
-				else if (groupQ1.getSelection()==null &&
-						 groupQ2.getSelection()==null &&
-						 groupQ3.getSelection()==null &&
-						 groupQ4.getSelection()==null &&
-						 groupQ5.getSelection()==null &&
-						 groupQ6.getSelection()==null &&
-						 groupQ7.getSelection()==null) {
-					StartPage.setVisible(false);
-					InputPage.setVisible(false);
-					ResultPage.setVisible(true);
-					
-					resultTargetPrint.setText(target);
-					resultProgramPrint.setText(program);
-					resultCountPrint.setText(Integer.toString(count));
-					
-					resultQ1P5.setText(Integer.toString(answerChart[0][0]));
-					resultQ1P4.setText(Integer.toString(answerChart[0][1]));
-					resultQ1P3.setText(Integer.toString(answerChart[0][2]));
-					resultQ1P2.setText(Integer.toString(answerChart[0][3]));
-					resultQ1P1.setText(Integer.toString(answerChart[0][4]));
-					resultQ2P5.setText(Integer.toString(answerChart[1][0]));
-					resultQ2P4.setText(Integer.toString(answerChart[1][1]));
-					resultQ2P3.setText(Integer.toString(answerChart[1][2]));
-					resultQ2P2.setText(Integer.toString(answerChart[1][3]));
-					resultQ2P1.setText(Integer.toString(answerChart[1][4]));
-					resultQ3P5.setText(Integer.toString(answerChart[2][0]));
-					resultQ3P4.setText(Integer.toString(answerChart[2][1]));
-					resultQ3P3.setText(Integer.toString(answerChart[2][2]));
-					resultQ3P2.setText(Integer.toString(answerChart[2][3]));
-					resultQ3P1.setText(Integer.toString(answerChart[2][4]));
-					resultQ4P5.setText(Integer.toString(answerChart[3][0]));
-					resultQ4P4.setText(Integer.toString(answerChart[3][1]));
-					resultQ4P3.setText(Integer.toString(answerChart[3][2]));
-					resultQ4P2.setText(Integer.toString(answerChart[3][3]));
-					resultQ4P1.setText(Integer.toString(answerChart[3][4]));
-					resultQ5P5.setText(Integer.toString(answerChart[4][0]));
-					resultQ5P4.setText(Integer.toString(answerChart[4][1]));
-					resultQ5P3.setText(Integer.toString(answerChart[4][2]));
-					resultQ5P2.setText(Integer.toString(answerChart[4][3]));
-					resultQ5P1.setText(Integer.toString(answerChart[4][4]));
-					resultQ6P5.setText(Integer.toString(answerChart[5][0]));
-					resultQ6P4.setText(Integer.toString(answerChart[5][1]));
-					resultQ6P3.setText(Integer.toString(answerChart[5][2]));
-					resultQ6P2.setText(Integer.toString(answerChart[5][3]));
-					resultQ6P1.setText(Integer.toString(answerChart[5][4]));
-					resultQ7P5.setText(Integer.toString(answerChart[6][0]));
-					resultQ7P4.setText(Integer.toString(answerChart[6][1]));
-					resultQ7P3.setText(Integer.toString(answerChart[6][2]));
-					resultQ7P2.setText(Integer.toString(answerChart[6][3]));
-					resultQ7P1.setText(Integer.toString(answerChart[6][4]));
-					
-					String Q1 = String.format("%.1f", ((answerChart[0][0]+answerChart[0][1])*1.0/count)*100);
-					String Q2 = String.format("%.1f", ((answerChart[1][0]+answerChart[1][1])*1.0/count)*100);
-					String Q3 = String.format("%.1f", ((answerChart[2][0]+answerChart[2][1])*1.0/count)*100);
-					String Q4 = String.format("%.1f", ((answerChart[3][0]+answerChart[3][1])*1.0/count)*100);
-					String Q5 = String.format("%.1f", ((answerChart[4][0]+answerChart[4][1])*1.0/count)*100);
-					String Q6 = String.format("%.1f", ((answerChart[5][0]+answerChart[5][1])*1.0/count)*100);
-					String Q7 = String.format("%.1f", ((answerChart[6][0]+answerChart[6][1])*1.0/count)*100);
-					
-					
-					resultQ1Percentage.setText(Q1);
-					resultQ2Percentage.setText(Q2); 
-					resultQ3Percentage.setText(Q3); 
-					resultQ4Percentage.setText(Q4);
-					resultQ5Percentage.setText(Q5);
-					resultQ6Percentage.setText(Q6);
-					resultQ7Percentage.setText(Q7);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "입력되지 않은 항목이 있습니다.");
-				}
-			}
-		});
-		InputPage.add(ExitButton);
+				InputPage.add(ExitButton);
 	}
 }
