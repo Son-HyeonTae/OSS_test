@@ -1,1 +1,3 @@
-# OSS_test
+# Satisfaction_Calculator
+
+used Swing package
